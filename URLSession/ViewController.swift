@@ -11,21 +11,32 @@ import UIKit
 class ViewController: UIViewController,UITableViewDataSource {
     @IBOutlet weak var tableView:UITableView!
     let cellIdentifier: String = "friendCell"
-    var friends:[Friend] = []
+    var friends: [Friend] = []
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return friends.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath)
         let friend: Friend = self.friends[indexPath.row]
         
         cell.textLabel?.text = friend.name.full
         cell.detailTextLabel?.text = friend.email
+        cell.imageView?.image = nil
         
-        guard let imageURL: URL = URL(string: friend.picture.thumbnail) else { return cell }
-        guard let imageData: Data = try? Data(contentsOf: imageURL) else { return cell }
-        cell.imageView?.image = UIImage(data: imageData)
+        DispatchQueue.global().async {
+            guard let imageURL: URL = URL(string: friend.picture.thumbnail) else { return }
+            guard let imageData: Data = try? Data(contentsOf: imageURL) else { return }
+            
+            DispatchQueue.main.sync {
+                if let index: IndexPath = tableView.indexPath(for: cell) {
+                    if index.row == indexPath.row {
+                        cell.imageView?.image = UIImage(data: imageData)
+                    }
+                }
+            }
+        }
+        
         
         return cell
     }
@@ -47,13 +58,18 @@ class ViewController: UIViewController,UITableViewDataSource {
             do {
                 let apiResponse: APIResponse = try JSONDecoder().decode(APIResponse.self, from: data)
                 self.friends = apiResponse.results
-                self.tableView.reloadData()
+                print(self.friends.count)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                
             } catch(let err) {
                 print(err.localizedDescription)
             }
         }
         dataTask.resume()
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
