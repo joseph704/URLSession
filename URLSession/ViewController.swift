@@ -41,40 +41,30 @@ class ViewController: UIViewController,UITableViewDataSource {
         return cell
     }
     
+    @objc func didRecieveFriendsNotification(_ noti: Notification){
+        guard let friends: [Friend] = noti.userInfo?["friends"] as? [Friend] else {return}
+        
+        self.friends = friends
+        
+        // requestFriends메소드에서 post부분이 백그라운드 스레드로 돌아가기 때문이다
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+        
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        guard let url: URL = URL(string: "https://randomuser.me/api/?resluts=20&inc=name,email,picture") else {return}
         
-        let session: URLSession = URLSession(configuration: .default)
-        let dataTask: URLSessionDataTask = session.dataTask(with: url) { (data:Data?, response: URLResponse?, error: Error?) in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            
-            guard let data = data else { return }
-            
-            do {
-                let apiResponse: APIResponse = try JSONDecoder().decode(APIResponse.self, from: data)
-                self.friends = apiResponse.results
-                print(self.friends.count)
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-                
-            } catch(let err) {
-                print(err.localizedDescription)
-            }
-        }
-        dataTask.resume()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        requestFriends()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didRecieveFriendsNotification(_:)), name: DidReceiveFriendsNotification, object: nil)
         // Do any additional setup after loading the view.
     }
 
 
 }
-

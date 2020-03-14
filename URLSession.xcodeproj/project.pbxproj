@@ -14,6 +14,7 @@
 		233BCACB2416487B00953A01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 233BCACA2416487B00953A01 /* Assets.xcassets */; };
 		233BCACE2416487B00953A01 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 233BCACC2416487B00953A01 /* LaunchScreen.storyboard */; };
 		2349C1082419246F007313BE /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2349C1072419246F007313BE /* Model.swift */; };
+		23699B39241D3C5000700B5F /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23699B38241D3C5000700B5F /* Request.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		233BCACD2416487B00953A01 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		233BCACF2416487B00953A01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2349C1072419246F007313BE /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		23699B38241D3C5000700B5F /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				233BCAC12416487900953A01 /* AppDelegate.swift */,
 				233BCAC32416487900953A01 /* SceneDelegate.swift */,
 				233BCAC52416487900953A01 /* ViewController.swift */,
+				23699B38241D3C5000700B5F /* Request.swift */,
 				233BCAC72416487900953A01 /* Main.storyboard */,
 				233BCACA2416487B00953A01 /* Assets.xcassets */,
 				233BCACC2416487B00953A01 /* LaunchScreen.storyboard */,
@@ -143,6 +146,7 @@
 			files = (
 				233BCAC62416487900953A01 /* ViewController.swift in Sources */,
 				233BCAC22416487900953A01 /* AppDelegate.swift in Sources */,
+				23699B39241D3C5000700B5F /* Request.swift in Sources */,
 				233BCAC42416487900953A01 /* SceneDelegate.swift in Sources */,
 				2349C1082419246F007313BE /* Model.swift in Sources */,
 			);
